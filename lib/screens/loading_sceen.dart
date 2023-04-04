@@ -9,13 +9,17 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
   void getLocation() async {
     LocationPermission permission;
-    permission = await Geolocator.checkPermission();
     permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied) {
-      //nothing
-    }
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.low);
+    // LocationPermission permission;
+    // permission = await Geolocator.checkPermission();
+    // permission = await Geolocator.requestPermission();
+    // if (permission == LocationPermission.denied) {
+    //   //nothing
+    // }
+    // Position position = await Geolocator.getCurrentPosition(
+    //     desiredAccuracy: LocationAccuracy.low);
     print(position);
   }
 
