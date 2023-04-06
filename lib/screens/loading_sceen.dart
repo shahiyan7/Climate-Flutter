@@ -30,15 +30,18 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String myMargin = 'abc';
+    double updatedMargin;
+    try {
+      updatedMargin = double.parse(myMargin);
+    } catch (e) {
+      print(e);
+      updatedMargin = 30.0;
+    }
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            //Get the current location
-            getLocation();
-          },
-          child: Text('Get Location'),
-        ),
+      body: Container(
+        margin: EdgeInsets.all(updatedMargin),
+        color: Colors.red,
       ),
     );
   }
