@@ -7,6 +7,11 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+  void initState() {
+    super.initState();
+    getLocation();
+  }
+
   void getLocation() async {
     LocationPermission permission;
     permission = await Geolocator.requestPermission();
