@@ -13,10 +13,14 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void getLocation() async {
-    LocationPermission permission;
-    permission = await Geolocator.requestPermission();
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.low);
+    try {
+      LocationPermission permission;
+      permission = await Geolocator.requestPermission();
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.low);
+      print(position);
+    }
+
     // LocationPermission permission;
     // permission = await Geolocator.checkPermission();
     // permission = await Geolocator.requestPermission();
@@ -25,7 +29,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
     // }
     // Position position = await Geolocator.getCurrentPosition(
     //     desiredAccuracy: LocationAccuracy.low);
-    print(position);
+    catch (e) {
+      print(e);
+    }
   }
 
   @override
