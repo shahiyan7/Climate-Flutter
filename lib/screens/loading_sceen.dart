@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:climate_flutter/services/location.dart';
-import 'package:http/http.dart' as http;
+import 'package:climate_flutter/services/networking.dart';
+
+const apiKey = '02622934bc8577753a823aa36144ad3d';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -9,33 +11,28 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+  double? latitude;
+  double? longitude;
+
   void initState() {
     super.initState();
-    getLocation();
+    getLocationData();
   }
 
-  void getData() async {
-    final response = await http.get(Uri.parse(
-        'http://api.weatherapi.com/v1/current.json?key=8846163a17f24ae0a26180048232504&q=noida&aqi=no'));
-    if (response.statusCode == 200) {
-      String data = response.body;
-      print(data);
-    } else {
-      print(response.statusCode);
-    }
-    // print(response.body);
-  }
-
-  void getLocation() async {
+  void getLocationData() async {
     Location location = Location();
     await location.getCurrentLocation();
-    print(location.latitude);
-    print(location.longitude);
+    latitude = location.latitude;
+    longitude = location.longitude;
+
+    NetworkHelper networkHelper = NetworkHelper(
+        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey');
+
+    var weatherData = networkHelper.getData();
   }
 
   @override
   Widget build(BuildContext context) {
-    getData();
     return Scaffold(
       body: Container(
         margin: EdgeInsets.all(10.0),
